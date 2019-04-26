@@ -14,6 +14,7 @@ namespace Core
         private string _currentIp;
         private readonly Credentials _credentials = new Credentials();
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private int _timerInterval = 300000;
 
         public DnsUpdaterService()
         {
@@ -28,10 +29,11 @@ namespace Core
 
             _currentIp = GetIp();
             logger.Info("Initial IP: {0}", _currentIp);
+            logger.Info("Interval time: {0}", _timerInterval);
             logger.Info(UpdateIp(_currentIp));
 
             _timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
-            _timer.Interval = 120000;
+            _timer.Interval = _timerInterval;
             _timer.Enabled = true;
         }
 
@@ -49,6 +51,10 @@ namespace Core
                 logger.Info("IP has changed: {0} -> {1}", _currentIp, checkIp);
                 _currentIp = checkIp;
                 logger.Info("Response from IP update: {0}", GetWebResponse(UpdateIp(checkIp)));
+            }
+            else
+            {
+                logger.Info("IP unchanged");
             }
         }
 
