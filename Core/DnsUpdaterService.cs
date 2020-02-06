@@ -74,7 +74,7 @@ namespace Core
 
         public string GetIp()
         {
-            return GetWebResponse("https://domains.google.com/checkip");
+            return GetWebResponse("https://api.ipify.org/");
         }
 
         public string UpdateIp(string newIp)
