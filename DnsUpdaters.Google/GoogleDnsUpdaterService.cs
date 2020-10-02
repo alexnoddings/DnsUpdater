@@ -2,11 +2,11 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Core.Options;
-using Core.Services;
+using DnsUpdater.Core.Options;
+using DnsUpdater.Core.Services;
 using Microsoft.Extensions.Logging;
 
-namespace DnsUpdater.Google
+namespace DnsUpdater.DnsUpdaters.Google
 {
     internal class GoogleDnsUpdaterService : IDnsRecordUpdater, IDisposable
     {
@@ -34,6 +34,9 @@ namespace DnsUpdater.Google
             Logger.LogInformation($"Updating {Options.Hostname} to {newAddress}");
 
             string requestUri = string.Format(ApiEndpointFormat, Options.Hostname, newAddress);
+
+            return;
+
             HttpResponseMessage response = await HttpClient.GetAsync(requestUri);
 
             if (response.IsSuccessStatusCode) return;

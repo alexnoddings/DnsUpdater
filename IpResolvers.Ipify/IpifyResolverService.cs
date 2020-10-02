@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Core.Services;
+using DnsUpdater.Core.Services;
 using Microsoft.Extensions.Logging;
 
-namespace IpResolvers.Ipify
+namespace DnsUpdater.IpResolvers.Ipify
 {
     internal class IpifyResolverService : IIpAddressResolver
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Core.Options
+namespace DnsUpdater.Core.Options
 {
     internal class ServiceOptionsProvider : IServiceOptionsProvider
     {

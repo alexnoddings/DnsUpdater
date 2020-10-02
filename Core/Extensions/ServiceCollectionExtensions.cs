@@ -1,7 +1,7 @@
-﻿using Core.Options;
+﻿using DnsUpdater.Core.Options;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Core.Extensions
+namespace DnsUpdater.Core.Extensions
 {
     public static class ServiceCollectionExtensions
     {

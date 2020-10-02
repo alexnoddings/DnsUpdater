@@ -8,17 +8,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution Items", ".Solutio
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{6EDD83DA-45B8-4601-9B0C-A34194558160}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnsUpdater.Core", "Core\DnsUpdater.Core.csproj", "{6EDD83DA-45B8-4601-9B0C-A34194558160}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnsHost", "DnsHost\DnsHost.csproj", "{4E02DE3C-EB9C-47E6-8C62-9988CB31333B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnsUpdater.Host", "Host\DnsUpdater.Host.csproj", "{4E02DE3C-EB9C-47E6-8C62-9988CB31333B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IP Resolvers", "IP Resolvers", "{0EA1E51E-00D9-4DFD-94DC-1D8F7ABC5996}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DNS Record Updaters", "DNS Record Updaters", "{2555F536-A024-4809-84A3-4B8ABA9B5AB1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IpResolvers.Ipify", "IpResolvers.Ipify\IpResolvers.Ipify.csproj", "{8490F375-8285-4156-A593-DDDF6B8D5D6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnsUpdater.IpResolvers.Ipify", "IpResolvers.Ipify\DnsUpdater.IpResolvers.Ipify.csproj", "{8490F375-8285-4156-A593-DDDF6B8D5D6D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnsUpdater.Google", "DnsUpdater.Google\DnsUpdater.Google.csproj", "{C2141BCA-67C5-47E7-BC90-DE3B62303717}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnsUpdater.DnsUpdaters.Google", "DnsUpdaters.Google\DnsUpdater.DnsUpdaters.Google.csproj", "{C2141BCA-67C5-47E7-BC90-DE3B62303717}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

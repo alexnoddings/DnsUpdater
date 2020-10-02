@@ -1,4 +1,4 @@
-﻿namespace DnsUpdater.Google
+﻿namespace DnsUpdater.DnsUpdaters.Google
 {
     internal class GoogleDnsOptions
     {

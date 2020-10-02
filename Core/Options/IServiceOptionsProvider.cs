@@ -1,4 +1,4 @@
-﻿namespace Core.Options
+﻿namespace DnsUpdater.Core.Options
 {
     public interface IServiceOptionsProvider
     {

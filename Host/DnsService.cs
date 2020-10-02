@@ -2,13 +2,13 @@ using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Services;
+using DnsUpdater.Core.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace DnsHost
+namespace DnsUpdater.Host
 {
     internal class DnsService : BackgroundService
     {

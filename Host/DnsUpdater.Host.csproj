@@ -9,8 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj" />
-    <ProjectReference Include="..\DnsUpdater.Google\DnsUpdater.Google.csproj" />
-    <ProjectReference Include="..\IpResolvers.Ipify\IpResolvers.Ipify.csproj" />
+    <ProjectReference Include="..\Core\DnsUpdater.Core.csproj" />
+    <ProjectReference Include="..\DnsUpdater.Google\DnsUpdater.DnsUpdaters.Google.csproj" />
+    <ProjectReference Include="..\IpResolvers.Ipify\DnsUpdater.IpResolvers.Ipify.csproj" />
   </ItemGroup>
 </Project>

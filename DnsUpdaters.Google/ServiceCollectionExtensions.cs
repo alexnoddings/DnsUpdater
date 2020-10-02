@@ -1,7 +1,7 @@
-﻿using Core.Services;
+﻿using DnsUpdater.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DnsUpdater.Google
+namespace DnsUpdater.DnsUpdaters.Google
 {
     public static class ServiceCollectionExtensions
     {

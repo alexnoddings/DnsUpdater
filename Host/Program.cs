@@ -1,10 +1,10 @@
-using Core.Extensions;
-using DnsUpdater.Google;
-using IpResolvers.Ipify;
+using DnsUpdater.Core.Extensions;
+using DnsUpdater.DnsUpdaters.Google;
+using DnsUpdater.IpResolvers.Ipify;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace DnsHost
+namespace DnsUpdater.Host
 {
     public class Program
     {
@@ -12,7 +12,7 @@ namespace DnsHost
             CreateHostBuilder(args).Build().Run();
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+            Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
                 .ConfigureServices(services =>
                 {
                     services.AddServiceOptionsProvider();

@@ -1,4 +1,4 @@
-﻿namespace DnsHost
+﻿namespace DnsUpdater.Host
 {
     internal class DnsHostOptions
     {

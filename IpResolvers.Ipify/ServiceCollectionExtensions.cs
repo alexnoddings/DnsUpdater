@@ -1,7 +1,7 @@
-﻿using Core.Services;
+﻿using DnsUpdater.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IpResolvers.Ipify
+namespace DnsUpdater.IpResolvers.Ipify
 {
     public static class ServiceCollectionExtensions
     {
