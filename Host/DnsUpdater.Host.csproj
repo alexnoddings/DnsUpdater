@@ -10,7 +10,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core\DnsUpdater.Core.csproj" />
-    <ProjectReference Include="..\DnsUpdater.Google\DnsUpdater.DnsUpdaters.Google.csproj" />
+    <ProjectReference Include="..\DnsUpdaters.Azure\DnsUpdater.DnsUpdaters.Azure.csproj" />
+    <ProjectReference Include="..\DnsUpdaters.Google\DnsUpdater.DnsUpdaters.Google.csproj" />
     <ProjectReference Include="..\IpResolvers.Ipify\DnsUpdater.IpResolvers.Ipify.csproj" />
   </ItemGroup>
 </Project>

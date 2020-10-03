@@ -1,5 +1,5 @@
 using DnsUpdater.Core.Extensions;
-using DnsUpdater.DnsUpdaters.Google;
+using DnsUpdater.DnsUpdaters.Azure;
 using DnsUpdater.IpResolvers.Ipify;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,7 +18,8 @@ namespace DnsUpdater.Host
                     services.AddServiceOptionsProvider();
 
                     services.AddIpifyResolverService();
-                    services.AddGoogleDnsUpdaterService();
+                    //services.AddGoogleDnsUpdaterService();
+                    services.AddAzureDnsUpdaterService();
 
                     services.AddHostedService<DnsService>();
                 });
