@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+    <AssemblyName>DnsUpdater</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
