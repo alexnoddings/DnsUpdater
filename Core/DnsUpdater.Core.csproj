@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Version="$(MicrosoftPackageVersion)" Include="Microsoft.Extensions.Configuration.Binder" />
+    <PackageReference Version="$(MicrosoftPackageVersion)" Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+  </ItemGroup>
+
+</Project>

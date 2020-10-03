@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Version="$(MicrosoftPackageVersion)" Include="Microsoft.Extensions.Hosting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\DnsUpdater.Core.csproj" />
+    <ProjectReference Include="..\DnsUpdater.Google\DnsUpdater.DnsUpdaters.Google.csproj" />
+    <ProjectReference Include="..\IpResolvers.Ipify\DnsUpdater.IpResolvers.Ipify.csproj" />
+  </ItemGroup>
+</Project>
