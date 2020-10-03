@@ -31,7 +31,9 @@ namespace DnsUpdater.Host
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            Logger.LogInformation("Starting");
+            // Stops the "Application started" log appearing after we have started
+            await Task.Delay(100);
+            Logger.LogInformation("Starting with {checkInterval}ms check interval", Options.CheckIntervalMs);
             while (!stoppingToken.IsCancellationRequested)
             {
                 using (var scope = ScopeFactory.CreateScope())
@@ -39,6 +41,7 @@ namespace DnsUpdater.Host
                     var ipResolver = scope.ServiceProvider.GetRequiredService<IIpAddressResolver>();
                     IPAddress? ip = null;
                     var ipResolverFailed = false;
+                    Logger.LogDebug("Fetching current IP");
                     try
                     {
                         ip = await ipResolver.GetCurrentIpAddressAsync();
@@ -53,11 +56,11 @@ namespace DnsUpdater.Host
                     {
                         if (ip == null)
                         {
-                            Logger.LogWarning("IP resolver failed to return an IP, skipping this cycle");
+                            Logger.LogError("IP resolver failed to return an IP, skipping this cycle");
                         }
                         else if (!ip.Equals(LastKnownIp))
                         {
-                            Logger.LogInformation("New IP is {ip}, updating", ip);
+                            Logger.LogInformation("IP has changed to {ip}, updating", ip);
                             LastKnownIp = ip;
                             var updater = scope.ServiceProvider.GetRequiredService<IDnsRecordUpdater>();
                             try
@@ -68,6 +71,10 @@ namespace DnsUpdater.Host
                             {
                                 Logger.LogError("Failed to update IP:\n{e}", e);
                             }
+                        }
+                        else
+                        {
+                            Logger.LogDebug("Current IP has not changed");
                         }
                     }
                 }

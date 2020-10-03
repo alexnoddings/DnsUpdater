@@ -31,19 +31,20 @@ namespace DnsUpdater.DnsUpdaters.Google
 
         public async Task UpdateDnsRecordAsync(IPAddress newAddress)
         {
-            Logger.LogInformation($"Updating {Options.Hostname} to {newAddress}");
+            Logger.LogTrace("Updating {host} to {newAddress}", Options.Hostname, newAddress);
 
             string requestUri = string.Format(ApiEndpointFormat, Options.Hostname, newAddress);
 
-            return;
-
             HttpResponseMessage response = await HttpClient.GetAsync(requestUri);
 
-            if (response.IsSuccessStatusCode) return;
+            HttpStatusCode responseStatus = response.StatusCode;
+            string responseBody = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                Logger.LogDebug("Operation returned a {responseStatus}: {responseBody}", responseStatus, responseBody);  
+            }
 
-            HttpStatusCode status = response.StatusCode;
-            string body = await response.Content.ReadAsStringAsync();
-            Logger.LogError("Failed up update IP: {status} {body}", status, body);
+            Logger.LogError("Failed up update IP: {status} {body}", responseStatus, responseBody);
         }
 
         private static void EnsureOptionsSet(GoogleDnsOptions options)
