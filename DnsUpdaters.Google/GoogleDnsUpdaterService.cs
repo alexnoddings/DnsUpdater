@@ -8,8 +8,10 @@ using Microsoft.Extensions.Logging;
 
 namespace DnsUpdater.DnsUpdaters.Google
 {
-    internal class GoogleDnsUpdaterService : IDnsRecordUpdater, IDisposable
+    public class GoogleDnsUpdaterService : IDnsRecordUpdater, IDisposable
     {
+        public const string ServiceKey = "GoogleDns";
+
         private const string ApiEndpointFormat = "https://@domains.google.com/nic/update?hostname={0}&myip={1}";
 
         private ILogger<GoogleDnsUpdaterService> Logger { get; }

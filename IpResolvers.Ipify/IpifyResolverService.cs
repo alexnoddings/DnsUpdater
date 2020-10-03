@@ -6,8 +6,10 @@ using Microsoft.Extensions.Logging;
 
 namespace DnsUpdater.IpResolvers.Ipify
 {
-    internal class IpifyResolverService : IIpAddressResolver
+    public class IpifyResolverService : IIpAddressResolver
     {
+        public const string ServiceKey = "IpifyResolver";
+
         private const string ApiEndpoint = "https://api.ipify.org";
 
         private ILogger<IpifyResolverService> Logger { get; }

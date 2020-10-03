@@ -14,8 +14,10 @@ using Microsoft.Rest.Azure.Authentication;
 
 namespace DnsUpdater.DnsUpdaters.Azure
 {
-    internal class AzureDnsUpdaterService : IDnsRecordUpdater
+    public class AzureDnsUpdaterService : IDnsRecordUpdater
     {
+        public const string ServiceKey = "AzureDns";
+
         private ILogger<AzureDnsUpdaterService> Logger { get; }
 
         private AzureDnsOptions Options { get; }
@@ -59,7 +61,7 @@ namespace DnsUpdater.DnsUpdaters.Azure
             if (Options.UpdateMetaData)
             {
                 string nowStr = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
-                Logger.LogDebug("Updating \"LastUpdated\" metadata to ", nowStr);
+                Logger.LogDebug("Updating \"LastUpdated\" metadata to {nowStr}", nowStr);
                 existingRecords.Metadata ??= new Dictionary<string, string>();
                 existingRecords.Metadata["LastUpdated"] = nowStr;
             }
@@ -78,7 +80,8 @@ namespace DnsUpdater.DnsUpdaters.Azure
             string responseBody = await operationResponse.Response.Content.ReadAsStringAsync();
             if (operationResponse.Response.IsSuccessStatusCode)
             {
-                Logger.LogDebug("Operation returned a {responseStatus}: {responseBody}", responseStatus, responseBody);
+                Logger.LogDebug("Operation returned {responseStatus}: {responseBody}", responseStatus, responseBody);
+                return;
             }
 
             Logger.LogError("Failed to update IP: {responseStatus} {responseBody}", responseStatus, responseBody);
