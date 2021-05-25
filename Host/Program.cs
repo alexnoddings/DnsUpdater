@@ -78,6 +78,9 @@ namespace DnsUpdater.Host
         /// <returns>
         ///     The created <see cref="IIpAddressResolver"/>.
         /// </returns>
+        /// <exception cref="InvalidOperationException">
+        ///     Thrown when the registered service is not of type <see cref="IIpAddressResolver"/>.
+        /// </exception>
         private static IIpAddressResolver CreateIpAddressResolver(IServiceProvider services)
         {
             IConfiguration config = services.GetRequiredService<IConfiguration>();
@@ -91,11 +94,10 @@ namespace DnsUpdater.Host
             }
 
             Type serviceType = IpAddressResolvers[ipResolverServiceKey];
-            var service = services.GetService(serviceType) as IIpAddressResolver;
+            if (services.GetService(serviceType) is IIpAddressResolver service)
+                return service;
 
-            if (service != null) return service;
-
-            string message = $"IpAddressResolver type {serviceType.Name} was not registered properly.";
+            string message = $"{nameof(IIpAddressResolver)} type {serviceType.Name} was not registered properly.";
             services.GetService<ILogger<Program>>()?.LogCritical(message);
             throw new InvalidOperationException(message);
         }
@@ -109,6 +111,9 @@ namespace DnsUpdater.Host
         /// <returns>
         ///     The created <see cref="IDnsRecordUpdater"/>.
         /// </returns>
+        /// <exception cref="InvalidOperationException">
+        ///     Thrown when the registered service is not of type <see cref="IDnsRecordUpdater"/>.
+        /// </exception>
         private static IDnsRecordUpdater CreateDnsRecordUpdater(IServiceProvider services)
         {
             IConfiguration config = services.GetRequiredService<IConfiguration>();
@@ -122,11 +127,10 @@ namespace DnsUpdater.Host
             }
 
             Type serviceType = DnsUpdaters[dnsRecordUpdaterServiceKey];
-            var service = services.GetService(serviceType) as IDnsRecordUpdater;
+            if (services.GetService(serviceType) is IDnsRecordUpdater service)
+                return service;
 
-            if (service != null) return service;
-
-            string message = $"DnsRecordUpdater type {serviceType.Name} was not registered properly.";
+            string message = $"{nameof(IDnsRecordUpdater)} type {serviceType.Name} was not registered properly.";
             services.GetService<ILogger<Program>>()?.LogCritical(message);
             throw new InvalidOperationException(message);
         }

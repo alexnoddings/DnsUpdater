@@ -33,54 +33,58 @@ namespace DnsUpdater.Host
         {
             // Stops the "Application started" log appearing after we have started
             await Task.Delay(100);
-            Logger.LogInformation("Starting with {checkInterval}ms check interval", Options.CheckIntervalMs);
+            Logger.LogInformation("Starting with {checkInterval}ms check interval.", Options.CheckIntervalMs);
+
+            bool isFirstRequest = true;
             while (!stoppingToken.IsCancellationRequested)
             {
-                using (var scope = ScopeFactory.CreateScope())
+                if (isFirstRequest)
+                    isFirstRequest = false;
+                else
+                    await Task.Delay(Options.CheckIntervalMs, stoppingToken);
+
+                if (stoppingToken.IsCancellationRequested)
+                    break;
+
+                using var scope = ScopeFactory.CreateScope();
+
+                IPAddress ip;
+                Logger.LogDebug("Fetching current IP");
+                try
                 {
                     var ipResolver = scope.ServiceProvider.GetRequiredService<IIpAddressResolver>();
-                    IPAddress? ip = null;
-                    var ipResolverFailed = false;
-                    Logger.LogDebug("Fetching current IP");
+                    ip = await ipResolver.GetCurrentIpAddressAsync();
+                }
+                catch (Exception e)
+                {
+                    Logger.LogError(e, "Failed to resolve IP, skipping this cycle.");
+                    continue;
+                }
+
+                if (!ip.Equals(LastKnownIp))
+                {
+                    Logger.LogInformation("IP has changed to {ip}, updating.", ip);
+
                     try
                     {
-                        ip = await ipResolver.GetCurrentIpAddressAsync();
+                        var updater = scope.ServiceProvider.GetRequiredService<IDnsRecordUpdater>();
+                        await updater.UpdateDnsRecordAsync(ip);
                     }
                     catch (Exception e)
                     {
-                        Logger.LogError("Failed to resolve IP, skipping this cycle:\n{e}", e);
-                        ipResolverFailed = true;
+                        Logger.LogError(e, "Failed to update IP.");
+                        continue;
                     }
 
-                    if (!ipResolverFailed)
-                    {
-                        if (ip == null)
-                        {
-                            Logger.LogError("IP resolver failed to return an IP, skipping this cycle");
-                        }
-                        else if (!ip.Equals(LastKnownIp))
-                        {
-                            Logger.LogInformation("IP has changed to {ip}, updating", ip);
-                            LastKnownIp = ip;
-                            var updater = scope.ServiceProvider.GetRequiredService<IDnsRecordUpdater>();
-                            try
-                            {
-                                await updater.UpdateDnsRecordAsync(ip);
-                            }
-                            catch (Exception e)
-                            {
-                                Logger.LogError("Failed to update IP:\n{e}", e);
-                            }
-                        }
-                        else
-                        {
-                            Logger.LogDebug("Current IP has not changed");
-                        }
-                    }
+                    Logger.LogInformation("IP updated.");
+                    LastKnownIp = ip;
                 }
-                await Task.Delay(Options.CheckIntervalMs, stoppingToken);
+                else
+                {
+                    Logger.LogDebug("Current IP has not changed.");
+                }
             }
-            Logger.LogInformation("Cancellation requested, stopping service");
+            Logger.LogInformation("Cancellation requested, stopping service.");
         }
 
         private static void EnsureOptionsSet(DnsHostOptions options)

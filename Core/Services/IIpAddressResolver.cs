@@ -5,6 +5,6 @@ namespace DnsUpdater.Core.Services
 {
     public interface IIpAddressResolver
     {
-        public Task<IPAddress?> GetCurrentIpAddressAsync();
+        public Task<IPAddress> GetCurrentIpAddressAsync();
     }
 }

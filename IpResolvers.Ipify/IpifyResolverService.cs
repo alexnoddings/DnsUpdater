@@ -14,14 +14,14 @@ namespace DnsUpdater.IpResolvers.Ipify
 
         private ILogger<IpifyResolverService> Logger { get; }
 
-        private HttpClient HttpClient { get; } = new HttpClient();
+        private HttpClient HttpClient { get; } = new();
 
         public IpifyResolverService(ILogger<IpifyResolverService> logger)
         {
             Logger = logger;
         }
 
-        public async Task<IPAddress?> GetCurrentIpAddressAsync()
+        public async Task<IPAddress> GetCurrentIpAddressAsync()
         {
             Logger.LogTrace("Resolving current IP");
 
@@ -32,19 +32,15 @@ namespace DnsUpdater.IpResolvers.Ipify
             {
                 HttpStatusCode responseStatus = response.StatusCode;
                 string responseBody = await response.Content.ReadAsStringAsync();
-                Logger.LogError("Failed up fetch IP: {responseStatus} {responseBody}", responseStatus, responseBody);
-                return null;
+                throw new HttpRequestException($"Response status {responseStatus} did not indicate a successful response: {responseBody}");
             }
 
             string body = await response.Content.ReadAsStringAsync();
             Logger.LogTrace("Ipify API response: \"{body}\"", body);
-            if (!IPAddress.TryParse(body, out IPAddress? ipAddress))
-            {
-                Logger.LogError("Could not parse response: {body}", body);
-                return null;
-            }
 
+            IPAddress ipAddress = IPAddress.Parse(body);
             Logger.LogTrace("Current IP is {ipAddress}", ipAddress);
+
             return ipAddress;
         }
     }
