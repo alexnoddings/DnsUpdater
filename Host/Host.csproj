@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+    <RootNamespace>DnsUpdater.Host</RootNamespace>
+    <AssemblyName>DnsUpdater</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Version="$(MicrosoftPackageVersion)" Include="Microsoft.Extensions.Hosting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\DnsUpdaters.Azure\DnsUpdaters.Azure.csproj" />
+    <ProjectReference Include="..\DnsUpdaters.Cloudflare\DnsUpdaters.Cloudflare.csproj" />
+    <ProjectReference Include="..\DnsUpdaters.Google\DnsUpdaters.Google.csproj" />
+    <ProjectReference Include="..\IpResolvers.Ipify\IpResolvers.Ipify.csproj" />
+  </ItemGroup>
+</Project>
