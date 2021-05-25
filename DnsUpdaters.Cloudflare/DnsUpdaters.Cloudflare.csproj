@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+    <RootNamespace>DnsUpdater.DnsUpdaters.Cloudflare</RootNamespace>
+    <AssemblyName>DnsUpdater.DnsUpdaters.Cloudflare</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Version="$(MicrosoftPackageVersion)" Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+  </ItemGroup>
+
+</Project>

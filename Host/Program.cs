@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DnsUpdater.Core.Extensions;
 using DnsUpdater.Core.Services;
 using DnsUpdater.DnsUpdaters.Azure;
+using DnsUpdater.DnsUpdaters.Cloudflare;
 using DnsUpdater.DnsUpdaters.Google;
 using DnsUpdater.IpResolvers.Ipify;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +24,7 @@ namespace DnsUpdater.Host
         private static IDictionary<string, Type> DnsUpdaters { get; } = new Dictionary<string, Type>
         {
             {AzureDnsUpdaterService.ServiceKey, typeof(AzureDnsUpdaterService)},
+            {CloudflareDnsUpdaterService.ServiceKey, typeof(CloudflareDnsUpdaterService)},
             {GoogleDnsUpdaterService.ServiceKey, typeof(GoogleDnsUpdaterService)}
         };
 
@@ -63,8 +65,9 @@ namespace DnsUpdater.Host
 
                     services.AddScoped<IpifyResolverService>();
 
-                    services.AddScoped<GoogleDnsUpdaterService>();
                     services.AddScoped<AzureDnsUpdaterService>();
+                    services.AddScoped<CloudflareDnsUpdaterService>();
+                    services.AddScoped<GoogleDnsUpdaterService>();
 
                     services.AddHostedService<DnsService>();
                 });
