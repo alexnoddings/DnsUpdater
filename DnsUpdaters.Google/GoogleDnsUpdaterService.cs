@@ -23,7 +23,7 @@ namespace DnsUpdater.DnsUpdaters.Google
         {
             Logger = logger;
 
-            Options = serviceOptionsProvider.GetServiceOptions<GoogleDnsOptions>("GoogleDns");
+            Options = serviceOptionsProvider.GetServiceOptions<GoogleDnsOptions>(ServiceKey);
             EnsureOptionsSet(Options);
 
             var credentials = new NetworkCredential(Options.Username, Options.Password);

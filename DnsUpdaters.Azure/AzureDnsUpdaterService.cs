@@ -26,7 +26,7 @@ namespace DnsUpdater.DnsUpdaters.Azure
         {
             Logger = logger;
 
-            Options = serviceOptionsProvider.GetServiceOptions<AzureDnsOptions>("AzureDns");
+            Options = serviceOptionsProvider.GetServiceOptions<AzureDnsOptions>(ServiceKey);
             EnsureOptionsSet(Options);
         }
 
