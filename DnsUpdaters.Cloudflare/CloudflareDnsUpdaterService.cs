@@ -60,7 +60,7 @@ namespace DnsUpdater.DnsUpdaters.Cloudflare
                 return;
             }
 
-            var dnsRecordUpdateRequestUri = string.Format(DnsRecordUpdateApiEndpointFormat, Options.Zone, dnsRecord.Id);
+            var dnsRecordUpdateRequestUri = string.Format(DnsRecordUpdateApiEndpointFormat, zoneId, dnsRecord.Id);
             var newDnsRecord = new DnsRecord
             {
                 Id = dnsRecord.Id,
@@ -70,8 +70,24 @@ namespace DnsUpdater.DnsUpdaters.Cloudflare
                 Ttl = dnsRecord.Ttl,
                 Proxied = dnsRecord.Proxied
             };
+
             Logger.LogDebug("Updating DNS record.");
-            await HttpClient.PutAsJsonAsync(dnsRecordUpdateRequestUri, newDnsRecord);
+            var updateResponse = await HttpClient.PutAsJsonAsync(dnsRecordUpdateRequestUri, newDnsRecord);
+
+            if (updateResponse.IsSuccessStatusCode)
+                return;
+
+            var updateError = await updateResponse.Content.ReadFromJsonAsync<ErrorResponse>();
+            if (updateError?.Errors is null || updateError.Errors.Count == 0)
+            {
+                var rawResponse = updateResponse.Content.ReadAsStringAsync();
+                Logger.LogCritical($"Response indicated a failure, but no error message received. Raw response: {rawResponse}", rawResponse);
+            }
+            else
+            {
+                var errorsString = string.Join("\n", updateError.Errors.Select(error => $"{error.Code}: {error.Message}"));
+                Logger.LogCritical("Response indicated a failure with the following errors:\n{errors}", errorsString);
+            }
         }
 
         private static void EnsureOptionsSet(CloudflareDnsOptions options)
