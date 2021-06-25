@@ -27,7 +27,7 @@
     <!-- Targets -->
     <DefaultTargetFramework>net5.0</DefaultTargetFramework>
     <!-- Misc -->
-    <MicrosoftPackageVersion>5.0.0-rc.1.20451.14</MicrosoftPackageVersion>
+    <MicrosoftPackageVersion>5.0.0</MicrosoftPackageVersion>
   </PropertyGroup>
 
   <!-- Project conventions -->
