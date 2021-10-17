@@ -17,4 +17,4 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: alexnoddings/dnsupdater:latest
+        tags: ${{ secrets.DOCKERHUB_IMAGE_IDENTIFIER }}:latest
